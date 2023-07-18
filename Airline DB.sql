@@ -2,20 +2,20 @@
 --Find list of airport codes in Europe/Moscow timezone
  
 select airport_code
-from airports where timezone = 'Europe/Moscow'
+from airports where timezone = 'Europe/Moscow';
 
 
 --Write a query to get the count of seats in various fare condition for every aircraft code?
 
 select aircraft_code,count(seat_no),fare_conditions
 from seats 
-group by 1,3
+group by 1,3;
 
 
 --How many aircrafts codes have at least one Business class seats?
 
 select count(distinct aircraft_code) from seats
-having count(fare_conditions = 'Business') >= 1
+having count(fare_conditions = 'Business') >= 1;
 
 
 --Find out the name of the airport having maximum number of departure flight
@@ -33,7 +33,7 @@ WHERE f.DepartureCount = (
         SELECT Departure_Airport, COUNT(*) AS DepartureCount
         FROM Flights
         GROUP BY 1
-    ) subquery)
+    ) subquery);
 
 
 --Find out the name of the airport having least number of scheduled departure flights
@@ -59,7 +59,7 @@ WHERE airport_code IN (
 
 
 select count(departure_airport) as flight_count from flights
-where departure_airport = 'DME' and actual_departure is null
+where departure_airport = 'DME' and actual_departure is null;
 
 
 --Identify flight ids having range between 3000 to 6000
@@ -69,7 +69,7 @@ select a.aircraft_code,a.range,f.flight_no
 from aircrafts a 
 join flights f 
 on a.aircraft_code = f.aircraft_code
-where a.range BETWEEN 3000 and 6000
+where a.range BETWEEN 3000 and 6000;
 
 
 
@@ -88,7 +88,7 @@ WHERE departure_airport = 'URS' AND arrival_airport = 'KUF';
 
 SELECT COUNT(*) AS Flight_count
 FROM flights
-WHERE departure_airport IN ('NOZ', 'KRR')
+WHERE departure_airport IN ('NOZ', 'KRR');
 
 
 --Write a query to get the count of flights flying from KZN,DME,NBC,NJC,GDX,SGC,VKO,ROV
@@ -97,7 +97,7 @@ WHERE departure_airport IN ('NOZ', 'KRR')
 SELECT departure_airport,COUNT(*) AS Flight_count
 FROM flights
 WHERE departure_airport IN ('KZN','DME','NBC','NJC','GDX','SGC','VKO','ROV')
-group by 1
+group by 1;
 
 
 --Write a query to extract flight details having range between 3000 and 6000 and flying from DME
@@ -118,7 +118,7 @@ SELECT Flight_ID, Model
 FROM Flights f
 JOIN Aircrafts a 
 ON f.Aircraft_code = a.Aircraft_code
-WHERE a.Model like '%Airbus%' AND (f.Status = 'Cancelled' OR f.Status = 'Delayed')
+WHERE a.Model like '%Airbus%' AND (f.Status = 'Cancelled' OR f.Status = 'Delayed');
 
 
 
@@ -129,7 +129,7 @@ SELECT Flight_ID, Model
 FROM Flights f
 JOIN Aircrafts a 
 ON f.Aircraft_code = a.Aircraft_code
-WHERE a.Model like '%Boeing%' AND (f.Status = 'Cancelled' OR f.Status = 'Delayed')
+WHERE a.Model like '%Boeing%' AND (f.Status = 'Cancelled' OR f.Status = 'Delayed');
 
 
 
@@ -149,7 +149,7 @@ order by 2 desc
 )
 select arrival_airport as Airport_name from cancelFlight
 where rankCancel = (select max(rankCancel) from cancelFlight)
-order by 1
+order by 1;
 
 
 --Identify flight ids which are using “Airbus aircrafts”
@@ -169,7 +169,7 @@ WHERE a.model LIKE 'Airbus%';
 select flight_id, flight_no,to_char(scheduled_departure,'yyyy-mm-dd') AS Scheduled_departure,departure_airport
 from flights as f 
 group by 1,2,3,4
-order by 3 asc
+order by 3 asc;
 
 
 
@@ -183,7 +183,7 @@ on f.flight_id = tf.flight_id
 JOIN tickets t
 on t.ticket_no = tf.ticket_no
 where status = 'Cancelled' or actual_departure is null
-group by 1,2
+group by 1,2;
 
 
 
@@ -194,14 +194,14 @@ select flight_id, flight_no,to_char(scheduled_departure,'yyyy-mm-dd') AS Schedul
 from flights as f 
 where status = 'Canceled' or actual_departure is null
 group by 1,2,3,4
-order by 3 asc
+order by 3 asc;
 
 --Identify list of Airbus flight ids which got cancelled.
 
 select f.flight_id from flights f
 join aircrafts a 
 on f.aircraft_code = a.aircraft_code
-where a.model like '%Airbus%' and (status = 'Cancelled' or actual_departure is null)
+where a.model like '%Airbus%' and (status = 'Cancelled' or actual_departure is null);
 
 --Identify list of flight ids having highest range.
 
@@ -210,7 +210,7 @@ select f.flight_no, range from flights f
 join aircrafts a 
 on f.aircraft_code = a.aircraft_code
 group by 1,2
-order by 2 desc
+order by 2 desc;
 
 
 
